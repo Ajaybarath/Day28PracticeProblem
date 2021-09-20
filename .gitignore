@@ -11,6 +11,9 @@ build
 
 bin
 
+target/
+
+
 Thumbs.db
 .DS_Store
 .gradle
