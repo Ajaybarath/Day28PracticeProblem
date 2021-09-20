@@ -1,21 +1,27 @@
 package com.bridgeLabz.openCsvReader;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.sun.tools.jdeprscan.CSV;
 
 public class OpenCsvReader {
 
 	private static final String SAMPLE_CSV_FILE_PATH = "user.csv";
+	private static final String SAMPLE_JSON_FILE_PATH = null;
 
 	public static void main(String args[]) {
 
@@ -53,6 +59,17 @@ public class OpenCsvReader {
 			csvUsers.add(new CSVUser("wdfj", "sdf", "sd"));
 
 			beanToCsv.write(csvUsers);
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(csvUsers);
+			FileWriter jsonWriter = new FileWriter(SAMPLE_JSON_FILE_PATH);
+			jsonWriter.write(json);
+			jsonWriter.close();
+			
+			BufferedReader br = new BufferedReader(new FileReader(SAMPLE_JSON_FILE_PATH));
+			CSVUser[] csvUsers2 = gson.fromJson(br, CSVUser[].class);
+			List<CSVUser> list = Arrays.asList(csvUsers2);
+			
 			
 
 		} catch (Exception e) {
