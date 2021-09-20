@@ -1,11 +1,17 @@
 package com.bridgeLabz.openCsvReader;
 
 import java.io.Reader;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.sun.tools.jdeprscan.CSV;
 
 public class OpenCsvReader {
 
@@ -37,7 +43,16 @@ public class OpenCsvReader {
 
 			}
 			
+			Writer writer = Files.newBufferedWriter(Paths.get(SAMPLE_CSV_FILE_PATH));
+			StatefulBeanToCsv<CSVUser> beanToCsv = new StatefulBeanToCsvBuilder(writer)
+					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+					.build();
 			
+			List<CSVUser> csvUsers = new ArrayList();
+			csvUsers.add(new CSVUser("sdf", "sdf", "sd"));
+			csvUsers.add(new CSVUser("wdfj", "sdf", "sd"));
+
+			beanToCsv.write(csvUsers);
 			
 
 		} catch (Exception e) {
